@@ -23,6 +23,16 @@ namespace Shawna_Staff.Controllers
             return View();
         }
 
+        public IActionResult Overview()
+        {
+            return View();
+        }
+
+        public IActionResult Forum()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

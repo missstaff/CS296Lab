@@ -5,4 +5,8 @@
     <RootNamespace>Shawna_Staff</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Views\References\Index.cshtml~RF51546a5.TMP" />
+  </ItemGroup>
+
 </Project>
