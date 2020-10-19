@@ -7,7 +7,6 @@
 
 <div class="text-center">
     <h1 class="display-4">Community Forum</h1><br />
-    
     <form method="post">
         <label>Post Topic</label><br />
         <input asp-for="PostTopic" /><br />
@@ -21,7 +20,6 @@
         <input asp-for="Date" /><br /><br />
         <button type="submit" value="submit">Submit</button>
     </form>
-</div>
 
     <h1>Forum Posts</h1>
     <div>
@@ -36,3 +34,4 @@
         Date:
         @Model.Date;
     </div>
+
