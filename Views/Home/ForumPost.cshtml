@@ -4,16 +4,21 @@
     ViewData["TITLE"] = "Forum Post";
 }
 
-<h1>Forum Posts</h1>
-<div>
-    Post Topic:
-    @Model.PostTopic;
-    Post:
-    @Model.PostText;
-    User Name:
-    @Model.UserName.UserName;
-    Post Rating:
-    @Model.PostRating;
-    Date:
-    @Model.Date;
-</div>
+
+@if (Model != null)
+{
+    <div>
+        <h1>Forum Posts</h1>
+        <strong>Post Topic</strong><br />
+        @Model.PostTopic<br />
+        <strong>Post</strong><br />
+        @Model.PostText<br />
+        <strong>User Name</strong><br />
+        @Model.UserName.UserName<br />
+        <strong>Post Rating</strong><br />
+        @Model.PostRating<br />
+        <strong>Date</strong><br />
+        @Model.Date
+    </div>
+}
+
