@@ -30,17 +30,8 @@ namespace Shawna_Staff.Controllers
 
         public IActionResult Forum()
         {
-        
             return View();
         }
-
-        [HttpPost]
-        public IActionResult Forum(Forums model)
-        {
-            model.Date = DateTime.Now;
-            return View(model);
-        }
-
 
         public IActionResult Privacy()
         {
