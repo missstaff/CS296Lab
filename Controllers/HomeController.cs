@@ -30,13 +30,30 @@ namespace Shawna_Staff.Controllers
 
         public IActionResult Forum()
         {
+<<<<<<< HEAD
             return View();
         }
 
         public IActionResult Privacy()
+=======
+            Forums model = new Forums();
+            User userName = new User();
+            model.UserName = userName;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Forum(Forums model)
+        {
+            return View(model);
+        }
+
+        /*public IActionResult Privacy()
+>>>>>>> parent of d3a93a8... has all requirements for lab could, could use maybe padding in another place just to demonstrate padding?
         {
             return View();
-        }
+        }*/
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
