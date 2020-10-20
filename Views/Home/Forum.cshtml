@@ -10,20 +10,20 @@
     <div class="container">
         <form method="post">
             <div class="row">
-                <label class="control-label col-sm-3 ml-5" asp-for="PostTopic">Post Topic </label><br />
-                <input class="form-control col-sm-6" asp-for="PostTopic" placeholder="Topic" /><br />
+                <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostTopic">Post Topic </label><br />
+                <input class="form-control col-sm-6 pb-3" asp-for="PostTopic" placeholder="Topic" /><br />
             </div>
             <div class="row">
-                <label class="control-label col-sm-3 ml-5" asp-for="PostText">Comments</label><br />
-                <input class="form-control col-sm-6" asp-for="PostText" placeholder="Write comments..." /><br />
+                <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostText">Comments</label><br />
+                <input class="form-control col-sm-6 pb-3" asp-for="PostText" placeholder="Write comments..." /><br />
             </div>
             <div class="row">
-                <label class="control-label col-sm-3 ml-5" asp-for="UserName.UserName">User Name</label><br />
-                <input class="form-control col-sm-6" asp-for="UserName.UserName" placeholder="Username" /><br />
+                <label class="control-label col-sm-3 ml-5 pb-3" asp-for="UserName.UserName">User Name</label><br />
+                <input class="form-control col-sm-6 pb-3" asp-for="UserName.UserName" placeholder="Username" /><br />
             </div>
             <div class="row">
-                <label class="control-label col-sm-3 ml-5" asp-for="PostRating">Rating</label><br />
-                <input class="form-control col-sm-6" asp-for="PostRating" placeholder="Rate this post" /><br />
+                <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostRating">Rating</label><br />
+                <input class="form-control col-sm-6 pb-3" asp-for="PostRating" placeholder="Rate this post" /><br />
             </div>
 
             <!--<label>Date</label><br />
@@ -35,10 +35,9 @@
             </div>
         </form>
     </div>
-</div>
 
 
-<div">
+<div>
     <h1>Forum Posts</h1>
     @if (Model != null)
     {
