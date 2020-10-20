@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\Home\Forum.cshtml~RFece11c0.TMP" />
     <None Remove="Views\References\Index.cshtml~RF51546a5.TMP" />
   </ItemGroup>
 
