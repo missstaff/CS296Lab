@@ -30,23 +30,20 @@ namespace Shawna_Staff.Controllers
 
         public IActionResult Forum()
         {
-            Forums model = new Forums();
-            User userName = new User();
-            model.UserName = userName;
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Forum(Forums model)
+        public IActionResult Forum(ForumPosts model)
         {
+            model.Date = DateTime.Now;
             return View(model);
         }
 
-        /*public IActionResult Privacy()
+        public IActionResult Privacy()
         {
             return View();
-        }*/
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
