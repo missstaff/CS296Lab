@@ -1,0 +1,37 @@
+﻿@model QuizMV
+@{
+    ViewData["TITLE"] = "Quiz";
+}
+
+<h1 class="display-4 text-center">Quiz</h1>
+<br />
+<form method="post" class="container">
+    <p class="row">Is it best to use a wide or narrow angle lens for taking landscape photos?</p>
+    <div class="row">
+        <label for="wide" class="col-1">Wide</label>
+        <input asp-for="UserAnswer1" id="wide" value="wide" type="radio" class="form-control col-1 mb-2" />
+    </div>
+    <div class="row">
+        <label for="narrow" class="col-1">Narrow</label>
+        <input asp-for="UserAnswer1" id="narrow" value="narrow" type="radio" class="form-control col-1 pb-2" />
+    </div>
+    <p>@Model?.RightOrWrong1<p>
+        <br />
+        <label asp-for="UserAnswer2" class="control-label">What is the best focal length for landscape photography __mm?</label>
+        <input asp-for="UserAnswer2" type="number" class="form-control col-1" />
+    <p>@Model?.RightOrWrong2<p>
+        <br />
+    <p class="row">The "Golden Hour" is just after sunrise and just before sunset?</p>
+    <div class="row">
+        <label for="true" class="col-1">True</label>
+        <input asp-for="UserAnswer3" id="True" value="True" type="radio" class="form-control  col-1 mb-2" />
+    </div>
+    <div class="row">
+        <label for="false" class="col-1">False</label>
+        <input asp-for="UserAnswer3" id="false" value="false" type="radio" class="form-control col-1 pb-2" />
+    </div>
+    <p>@Model?.RightOrWrong3<p>
+    <div class="row justify-content-center ml-1">
+        <button class="btn btn-primary p-2" type="submit" value="submit">Submit</button>
+    </div>
+</form>

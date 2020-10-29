@@ -19,8 +19,8 @@ namespace Shawna_Staff.Models
         public void CheckAnswers()
         {
             RightOrWrong1 = UserAnswer1 == "wide" ? "Right" : "Wrong";
-            RightOrWrong2 = UserAnswer2 == "21mm" ? "Right" : "Wrong";
-            RightOrWrong3 = UserAnswer3 == "true" ? "Right" : "Wrong";
+            RightOrWrong2 = UserAnswer2 == "21" ? "Right" : "Wrong";
+            RightOrWrong3 = UserAnswer3 == "True" ? "Right" : "Wrong";
         }
     }
 }

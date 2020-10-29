@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Shawna_Staff.Models;
 
 namespace Shawna_Staff.Controllers
 {
@@ -21,6 +22,19 @@ namespace Shawna_Staff.Controllers
         public IActionResult BestLenses()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Quiz()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Quiz(QuizMV quiz)
+        {
+            quiz.CheckAnswers();
+            return View(quiz);
         }
     }
 }
