@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Models\QuizMV.cs~RF5c3cd6b.TMP" />
     <None Remove="Views\References\Index.cshtml~RF51546a5.TMP" />
   </ItemGroup>
 
