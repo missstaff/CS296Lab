@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Shawna_Staff</RootNamespace>
+    <UserSecretsId>5f5317e9-22e1-4043-a40b-fff351549e40</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
