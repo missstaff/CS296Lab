@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Shawna_Staff.Models
+﻿namespace Shawna_Staff.Models
 {
     public class User
     {
+        public int UserID { get; set; }
         public string UserName { get; set; }
     }
 }

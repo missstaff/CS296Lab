@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Shawna_Staff.Models;
 
 namespace Shawna_Staff.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        ForumContext context;
+        public HomeController(ForumContext ctx)
         {
-            _logger = logger;
+            context = ctx;
         }
-
         public IActionResult Index()
         {
             return View();
@@ -37,7 +32,15 @@ namespace Shawna_Staff.Controllers
         public IActionResult Forum(ForumPosts model)
         {
             model.Date = DateTime.Now;
+            context.ForumPosts.Add(model);
+            context.SaveChanges();
             return View(model);
+        }
+
+        public IActionResult ForumPost()
+        {
+            var posts = context.ForumPosts.ToList<ForumPosts>();
+            return View(posts);
         }
 
         public IActionResult Privacy()
