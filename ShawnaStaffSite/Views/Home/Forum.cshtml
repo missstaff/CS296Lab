@@ -19,8 +19,8 @@
             <input class="form-control col-sm-6 pb-3" asp-for="PostText" placeholder="Write comments..." /><br />
         </div>
         <div class="row">
-            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="UserName.UserName">User Name</label><br />
-            <input class="form-control col-sm-6 pb-3" asp-for="UserName.UserName" placeholder="Username" /><br />
+            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="UserName">User Name</label><br />
+            <input class="form-control col-sm-6 pb-3" asp-for="UserName" placeholder="Username" /><br />
         </div>
         <div class="row">
             <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostRating">Rating</label><br />
@@ -30,5 +30,7 @@
             <button class="btn btn-primary p-2" type="submit" value="submit">Submit</button>
         </div>
     </form>
-    <div>
         </div>
+    <div>
+        <a asp-controller="HOME" asp-action="FORUMPOST">Discussion Forum</a>
+     </div>

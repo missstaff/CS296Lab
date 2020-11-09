@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shawna_Staff.Models;
 
 namespace Shawna_Staff.Controllers
@@ -36,10 +37,10 @@ namespace Shawna_Staff.Controllers
             context.SaveChanges();
             return View(model);
         }
-
+ 
         public IActionResult ForumPost()
         {
-            var posts = context.ForumPosts.ToList<ForumPosts>();
+            var posts = context.ForumPosts.Include(user => user.UserName).ToList<ForumPosts>();
             return View(posts);
         }
 

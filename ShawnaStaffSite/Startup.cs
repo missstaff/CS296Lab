@@ -28,7 +28,7 @@ namespace Shawna_Staff
             services.AddControllersWithViews();
 
             services.AddDbContext<ForumContext>(options => 
-            options.UseSqlServer(Configuration["Data:ForumContext:ConnectionString"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:ConnectionString"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
