@@ -9,7 +9,7 @@
 
 <div class="container">
     <form method="post">
-        <<div asp-validation-summary="All"></div>
+        <!--<div asp-validation-summary="All"></div>-->
         <div class="row">
             <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostTopic">Post Topic </label><br />
             <input class="form-control col-sm-6 pb-3" asp-for="PostTopic" placeholder="Topic" /><br />
@@ -19,8 +19,8 @@
             <input class="form-control col-sm-6 pb-3" asp-for="PostText" placeholder="Write comments..." /><br />
         </div>
         <div class="row">
-            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="UserName.UserName">User Name</label><br />
-            <input class="form-control col-sm-6 pb-3" asp-for="UserName.UserName" placeholder="Username" /><br />
+            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="UserName">User Name</label><br />
+            <input class="form-control col-sm-6 pb-3" asp-for="UserName" placeholder="Username" /><br />
         </div>
         <div class="row">
             <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostRating">Rating</label><br />
@@ -30,22 +30,7 @@
             <button class="btn btn-primary p-2" type="submit" value="submit">Submit</button>
         </div>
     </form>
-    <div>
         </div>
-
-
-        <h1>Forum Posts</h1>
-        @if (Model != null)
-        {
-            <strong>Post Topic</strong><br />
-            @Model.PostTopic<br />
-            <strong>Post</strong><br />
-            @Model.PostText<br />
-            <strong>User Name</strong><br />
-            @Model.UserName.UserName<br />
-            <strong>Post Rating</strong><br />
-            @Model.PostRating<br />
-            <strong>Date</strong><br />
-            @Model.Date
-        }
-    </div>
+    <div>
+        <a asp-controller="HOME" asp-action="FORUMPOST">Discussion Forum</a>
+     </div>

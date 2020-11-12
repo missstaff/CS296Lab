@@ -1,19 +1,24 @@
-﻿@model ForumPosts
+﻿@model List<ForumPosts>
 
 @{
-    ViewData["TITLE"] = "Forum Post";
+    ViewData["TITLE"] = "Forum Posts";
 }
 
-<h1>Forum Posts</h1>
 <div>
-    Post Topic:
-    @Model.PostTopic;
-    Post:
-    @Model.PostText;
-    User Name:
-    @Model.UserName.UserName;
-    Post Rating:
-    @Model.PostRating;
-    Date:
-    @Model.Date;
+    <h2>Discussion Forum</h2>
+   @foreach (ForumPosts post in Model)
+   {
+    <p>
+        Post Topic:
+        @post.PostTopic;
+        Post:
+        @post.PostText;
+        User Name:
+        @post.UserName;
+        Post Rating:
+        @post.PostRating;
+        Date:
+        @post.Date;
+    </p>
+   }
 </div>
