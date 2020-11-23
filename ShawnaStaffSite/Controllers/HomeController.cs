@@ -4,16 +4,19 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shawna_Staff.Models;
+using Shawna_Staff.Repos;
 
 namespace Shawna_Staff.Controllers
 {
     public class HomeController : Controller
     {
-        ForumContext context;
-        public HomeController(ForumContext ctx)
+        IForums repo;
+
+        public HomeController(IForums r)
         {
-            context = ctx;
+            repo = r;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -33,14 +36,15 @@ namespace Shawna_Staff.Controllers
         public IActionResult Forum(ForumPosts model)
         {
             model.Date = DateTime.Now;
-            context.ForumPosts.Add(model);
-            context.SaveChanges();
+            // Store the model in the database
+            repo.AddPost(model);
+
             return View(model);
         }
  
         public IActionResult ForumPost()
         {
-            var posts = context.ForumPosts.Include(user => user.UserName).ToList<ForumPosts>();
+            var posts = repo.Posts.ToList<ForumPosts>();
             return View(posts);
         }
 
@@ -55,4 +59,4 @@ namespace Shawna_Staff.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-}
+};

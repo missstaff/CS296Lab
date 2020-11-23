@@ -10,7 +10,7 @@ using Shawna_Staff.Models;
 namespace Shawna_Staff.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20201104230827_Initial")]
+    [Migration("20201123193258_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,21 +31,25 @@ namespace Shawna_Staff.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NameUserID")
+                        .HasColumnType("int");
+
                     b.Property<int>("PostRating")
                         .HasColumnType("int");
 
                     b.Property<string>("PostText")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<string>("PostTopic")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserNameUserID")
-                        .HasColumnType("int");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
 
                     b.HasKey("PostID");
 
-                    b.HasIndex("UserNameUserID");
+                    b.HasIndex("NameUserID");
 
                     b.ToTable("ForumPosts");
                 });
@@ -57,7 +61,7 @@ namespace Shawna_Staff.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserID");
@@ -67,9 +71,11 @@ namespace Shawna_Staff.Migrations
 
             modelBuilder.Entity("Shawna_Staff.Models.ForumPosts", b =>
                 {
-                    b.HasOne("Shawna_Staff.Models.User", "UserName")
+                    b.HasOne("Shawna_Staff.Models.User", "Name")
                         .WithMany()
-                        .HasForeignKey("UserNameUserID");
+                        .HasForeignKey("NameUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

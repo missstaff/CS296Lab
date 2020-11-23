@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shawna_Staff.Models
 {
@@ -10,22 +8,24 @@ namespace Shawna_Staff.Models
     {
         [Key]
         public int PostID { get; set; }
-        /*[Required(ErrorMessage = "Please enter a Post Topic.")]
-        [Range(2, 50, ErrorMessage = "Topic should be between 2 and 50 characters long.")]*/
+
+        [StringLength(60, MinimumLength = 2, ErrorMessage = "Post title must be between 2 and 60 characters")]
+        [Required]
         public string PostTopic { get; set; }
 
-        /*[Required(ErrorMessage = "Please enter your comments.")]
-        [Range(5, 1000, ErrorMessage = "Post must between 5 and 1000 characters long.")]*/
+        [StringLength(1000, MinimumLength = 2, ErrorMessage = "Post must be between 2 and 1000 characters")]
+        [Required]
         public string PostText { get; set; }
 
-        /*[Required(ErrorMessage = "Please enter your user name.")]
-        [Range(2, 25, ErrorMessage = "User name must between 2 and 25 characters long.")]*/
-        public User UserName { get; set; }
+        //foreign key violation??
+        [Required]
+        public User Name { get; set; }
 
-        /*[Required(ErrorMessage = "Please enter a rating.")]
-        [Range(1, 5, ErrorMessage = "Ratings must be between 1 and 5.")]*/
+        [Required(ErrorMessage = "Please enter a rating.")]
+        [Range(1, 5, ErrorMessage = "Ratings must be between 1 and 5.")]
         public int PostRating { get; set; }
 
+        [Required]
         public DateTime Date { get; set; }
     }
 }

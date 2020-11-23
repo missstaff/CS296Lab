@@ -13,7 +13,7 @@ namespace Shawna_Staff.Migrations
                 {
                     UserID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -26,9 +26,9 @@ namespace Shawna_Staff.Migrations
                 {
                     PostID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PostTopic = table.Column<string>(nullable: true),
-                    PostText = table.Column<string>(nullable: true),
-                    UserNameUserID = table.Column<int>(nullable: true),
+                    PostTopic = table.Column<string>(maxLength: 60, nullable: false),
+                    PostText = table.Column<string>(maxLength: 1000, nullable: false),
+                    NameUserID = table.Column<int>(nullable: false),
                     PostRating = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false)
                 },
@@ -36,17 +36,17 @@ namespace Shawna_Staff.Migrations
                 {
                     table.PrimaryKey("PK_ForumPosts", x => x.PostID);
                     table.ForeignKey(
-                        name: "FK_ForumPosts_User_UserNameUserID",
-                        column: x => x.UserNameUserID,
+                        name: "FK_ForumPosts_User_NameUserID",
+                        column: x => x.NameUserID,
                         principalTable: "User",
                         principalColumn: "UserID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ForumPosts_UserNameUserID",
+                name: "IX_ForumPosts_NameUserID",
                 table: "ForumPosts",
-                column: "UserNameUserID");
+                column: "NameUserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

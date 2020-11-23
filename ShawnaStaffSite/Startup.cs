@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shawna_Staff.Models;
+using Shawna_Staff.Repos;
 
 namespace Shawna_Staff
 {
@@ -26,7 +27,7 @@ namespace Shawna_Staff
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services.AddTransient<IForums, ForumsRepository>();
             services.AddDbContext<ForumContext>(options => 
             options.UseSqlServer(Configuration["ConnectionStrings:ConnectionString"]));
         }
