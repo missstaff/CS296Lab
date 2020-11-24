@@ -38,7 +38,7 @@ namespace Shawna_Staff.Controllers
             // Store the model in the database
             repo.AddPost(model);
 
-            return View(model);
+            return Redirect("ForumPost");
         }
  
         public IActionResult ForumPost()
