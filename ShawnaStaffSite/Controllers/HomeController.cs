@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Shawna_Staff.Models;
 using Shawna_Staff.Repos;
 
@@ -39,7 +38,7 @@ namespace Shawna_Staff.Controllers
             // Store the model in the database
             repo.AddPost(model);
 
-            return View(model);
+            return Redirect("ForumPost");
         }
  
         public IActionResult ForumPost()

@@ -10,7 +10,7 @@ namespace Shawna_Staff.Repos
     {
         List<ForumPosts> posts = new List<ForumPosts>();
 
-        public IQueryable<ForumPosts> Posts { get { return (IQueryable<ForumPosts>)posts; } }
+        public IQueryable<ForumPosts> Posts { get { return posts.AsQueryable<ForumPosts>(); } }
 
         public void AddPost(ForumPosts forumPost)
         {
