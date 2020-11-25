@@ -18,8 +18,7 @@ namespace Shawna_Staff.Models
         [Required]
         public string PostText { get; set; }
 
-        [Required]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 100 characters")]
+        
         public User Name { get; set; }
 
         [Range(1, 5, ErrorMessage = "Ratings must be between 1 and 5.")]
