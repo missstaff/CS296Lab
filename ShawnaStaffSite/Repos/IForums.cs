@@ -9,8 +9,8 @@ namespace Shawna_Staff.Repos
     public interface IForums
     {
         IQueryable<ForumPosts> Posts { get; }
-        void AddPost(ForumPosts forumPost);
+        public void AddPost(ForumPosts forumPost);
 
-        ForumPosts GetForumPostsByPostTitle(string postTitle);
+        public ForumPosts GetForumPostsByPostTitle(string postTitle);
     }
 }

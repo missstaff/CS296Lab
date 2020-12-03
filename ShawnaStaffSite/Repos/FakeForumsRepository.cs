@@ -20,7 +20,8 @@ namespace Shawna_Staff.Repos
 
         public ForumPosts GetForumPostsByPostTitle(string postTitle)
         {
-            throw new NotImplementedException();
+            var post = posts.Find(p => p.PostTopic == postTitle);
+            return post;
         }
     }
 }

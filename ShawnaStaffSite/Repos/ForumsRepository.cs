@@ -31,7 +31,8 @@ namespace Shawna_Staff.Repos
 
         public ForumPosts GetForumPostsByPostTitle(string postTitle)
         {
-            throw new NotImplementedException();
+            var posts = context.ForumPosts.Find(postTitle);
+            return posts;
         }
     }
 }
