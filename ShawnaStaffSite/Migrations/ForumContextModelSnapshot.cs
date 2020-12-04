@@ -29,7 +29,7 @@ namespace Shawna_Staff.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NameUserID")
+                    b.Property<int?>("NameUserID")
                         .HasColumnType("int");
 
                     b.Property<int>("PostRating")
@@ -60,7 +60,9 @@ namespace Shawna_Staff.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("UserID");
 
@@ -71,9 +73,7 @@ namespace Shawna_Staff.Migrations
                 {
                     b.HasOne("Shawna_Staff.Models.User", "Name")
                         .WithMany()
-                        .HasForeignKey("NameUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NameUserID");
                 });
 #pragma warning restore 612, 618
         }

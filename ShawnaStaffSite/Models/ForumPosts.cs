@@ -21,6 +21,7 @@ namespace Shawna_Staff.Models
         
         public User Name { get; set; }
 
+
         [Range(1, 5, ErrorMessage = "Ratings must be between 1 and 5.")]
         [Required(ErrorMessage = "Please enter a rating.")]
         public int PostRating { get; set; }

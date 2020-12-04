@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,53 @@ namespace Shawna_Staff.Controllers
             var posts = repo.Posts.ToList<ForumPosts>();
             return View(posts);
         }
+
+        
+
+        [HttpPost]
+        public IActionResult ForumPost(string postTopic, string date)
+        {
+            List<ForumPosts> posts = null;
+            if (postTopic != null)
+            {
+                posts = (from f in repo.Posts
+                         where f.PostTopic == postTopic
+                         select f).ToList();
+            }
+            else if (date != null)
+            {
+                DateTime d;
+                DateTime.TryParse(date, out d);
+                posts = (from f in repo.Posts
+                         where f.Date.Month == d.Month &&
+                         f.Date.Day == d.Day &&
+                         f.Date.Year == d.Year
+                         select f).ToList();
+            }
+
+            return View(posts);
+        }
+
+        /*[HttpPost]
+        public IActionResult ForumPost(string postTopic, DateTime date)
+        {
+            List<ForumPosts> posts = null;
+            if (postTopic != null)
+            {
+                posts = (from f in repo.Posts
+                             where f.PostTopic == postTopic
+                             select f).ToList();
+            }
+            else if (date != null)
+            {
+                posts = (from f in repo.Posts
+                             where f.Date.ToString() == date.ToString()
+                             select f).ToList();
+            }
+            
+            return View(posts);
+        }*/
+
 
         public IActionResult Privacy()
         {

@@ -13,7 +13,7 @@ namespace Shawna_Staff.Migrations
                 {
                     UserID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,7 +28,7 @@ namespace Shawna_Staff.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PostTopic = table.Column<string>(maxLength: 60, nullable: false),
                     PostText = table.Column<string>(maxLength: 1000, nullable: false),
-                    NameUserID = table.Column<int>(nullable: false),
+                    NameUserID = table.Column<int>(nullable: true),
                     PostRating = table.Column<int>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false)
                 },
@@ -40,7 +40,7 @@ namespace Shawna_Staff.Migrations
                         column: x => x.NameUserID,
                         principalTable: "User",
                         principalColumn: "UserID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

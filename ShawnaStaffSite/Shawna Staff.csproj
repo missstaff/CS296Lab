@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20201104230827_Initial.cs" />
-    <Compile Remove="Migrations\20201104230827_Initial.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Models\QuizMV.cs~RF5c3cd6b.TMP" />
     <None Remove="Views\Home\ForumPost.cshtml~RF6870fa0.TMP" />
     <None Remove="Views\Home\ForumPost.cshtml~RF68a7810.TMP" />
