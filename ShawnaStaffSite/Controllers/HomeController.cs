@@ -35,13 +35,22 @@ namespace Shawna_Staff.Controllers
         [HttpPost]
         public IActionResult Forum(ForumPosts model)
         {
-            model.Date = DateTime.Now;
-            // Store the model in the database
-            repo.AddPost(model);
 
-            return Redirect("ForumPost");
+            if (ModelState.IsValid)
+            {
+                model.Date = DateTime.Now;
+                // Store the model in the database
+                repo.AddPost(model);
+            }
+            else
+            {
+                return View(model);
+            }
+            return Redirect("ForumPost"); // displays all messages
         }
- 
+        
+
+
         public IActionResult ForumPost()
         {
             var posts = repo.Posts.ToList<ForumPosts>();
