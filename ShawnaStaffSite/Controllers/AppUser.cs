@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shawna_Staff.Controllers
 {
-    public class User
+    public class AppUser
     {
     }
 }

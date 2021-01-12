@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,10 @@ namespace Shawna_Staff
             services.AddTransient<IForums, ForumsRepository>();
             services.AddDbContext<ForumContext>(options => 
             options.UseSqlServer(Configuration["ConnectionStrings:ConnectionString"]));
+
+            services.AddIdentity<AppUser, IdentityRole>()
+            .AddEntityFrameworkStores<ForumContext>()
+            .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +57,7 @@ namespace Shawna_Staff
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Models\ForumContext.cs~RF9a0d3e9.TMP" />
+    <None Remove="Models\ForumContext.cs~RF9a3de89.TMP" />
     <None Remove="Models\QuizMV.cs~RF5c3cd6b.TMP" />
     <None Remove="Views\Home\ForumPost.cshtml~RF6870fa0.TMP" />
     <None Remove="Views\Home\ForumPost.cshtml~RF68a7810.TMP" />
@@ -15,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
       <PrivateAssets>all</PrivateAssets>
