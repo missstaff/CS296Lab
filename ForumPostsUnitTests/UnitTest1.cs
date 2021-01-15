@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using User = Shawna_Staff.Models.User;
+using AppUser = Shawna_Staff.Models.AppUser;
 
 namespace ForumPostsUnitTests
 {
@@ -20,7 +20,7 @@ namespace ForumPostsUnitTests
             var post = new ForumPosts() 
             { 
               PostTopic = "Low lighting Techniques", 
-              Name = new User() {Name = "Me" },
+              Name = new AppUser() {Name = "Me" },
               PostText = "Really useful info!" 
             };
             // Act

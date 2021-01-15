@@ -19,7 +19,7 @@ namespace Shawna_Staff.Models
         public string PostText { get; set; }
 
         [Required]
-        public User Name { get; set; }
+        public AppUser Name { get; set; }
 
 
         [Range(1, 5, ErrorMessage = "Ratings must be between 1 and 5.")]
