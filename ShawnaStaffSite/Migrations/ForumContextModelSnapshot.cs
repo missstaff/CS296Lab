@@ -232,7 +232,6 @@ namespace Shawna_Staff.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NameId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PostRating")
@@ -322,9 +321,7 @@ namespace Shawna_Staff.Migrations
                 {
                     b.HasOne("Shawna_Staff.Models.AppUser", "Name")
                         .WithMany()
-                        .HasForeignKey("NameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NameId");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shawna_Staff.Models;
 using Shawna_Staff.Repos;
@@ -11,10 +12,12 @@ namespace Shawna_Staff.Controllers
     public class HomeController : Controller
     {
         IForums repo;
+        UserManager<AppUser> userManager;
 
-        public HomeController(IForums r)
+        public HomeController(IForums r, UserManager<AppUser> u)
         {
             repo = r;
+            userManager = u;
         }
 
         public IActionResult Index()
@@ -38,7 +41,10 @@ namespace Shawna_Staff.Controllers
 
             if (ModelState.IsValid)
             {
+                model.Name = userManager.GetUserAsync(User).Result;
+                model.Name.Name = model.Name.UserName;
                 model.Date = DateTime.Now;
+              
                 // Store the model in the database
                 repo.AddPost(model);
             }
@@ -82,26 +88,6 @@ namespace Shawna_Staff.Controllers
 
             return View(posts);
         }
-
-        /*[HttpPost]
-        public IActionResult ForumPost(string postTopic, DateTime date)
-        {
-            List<ForumPosts> posts = null;
-            if (postTopic != null)
-            {
-                posts = (from f in repo.Posts
-                             where f.PostTopic == postTopic
-                             select f).ToList();
-            }
-            else if (date != null)
-            {
-                posts = (from f in repo.Posts
-                             where f.Date.ToString() == date.ToString()
-                             select f).ToList();
-            }
-            
-            return View(posts);
-        }*/
 
 
         public IActionResult Privacy()
