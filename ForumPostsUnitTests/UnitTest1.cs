@@ -16,7 +16,7 @@ namespace ForumPostsUnitTests
         {
             // Arrange
             var repo = new FakeForumsRepository();
-            var controller = new HomeController(repo);
+            var controller = new HomeController(repo, null);
             var post = new ForumPosts() 
             { 
               PostTopic = "Low lighting Techniques", 
