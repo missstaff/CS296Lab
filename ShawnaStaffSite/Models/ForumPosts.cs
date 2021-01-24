@@ -18,7 +18,7 @@ namespace Shawna_Staff.Models
         [Required]
         public string PostText { get; set; }
 
-        [Required]
+      
         public AppUser Name { get; set; }
 
 

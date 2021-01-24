@@ -3,31 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Shawna_Staff.Migrations
 {
-    public partial class AddedAuthorization : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ForumPosts_User_NameUserID",
-                table: "ForumPosts");
-
-            migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropIndex(
-                name: "IX_ForumPosts_NameUserID",
-                table: "ForumPosts");
-
-            migrationBuilder.DropColumn(
-                name: "NameUserID",
-                table: "ForumPosts");
-
-            migrationBuilder.AddColumn<string>(
-                name: "NameId",
-                table: "ForumPosts",
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -175,10 +154,28 @@ namespace Shawna_Staff.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ForumPosts_NameId",
-                table: "ForumPosts",
-                column: "NameId");
+            migrationBuilder.CreateTable(
+                name: "ForumPosts",
+                columns: table => new
+                {
+                    PostID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostTopic = table.Column<string>(maxLength: 60, nullable: false),
+                    PostText = table.Column<string>(maxLength: 1000, nullable: false),
+                    NameId = table.Column<string>(nullable: true),
+                    PostRating = table.Column<int>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ForumPosts", x => x.PostID);
+                    table.ForeignKey(
+                        name: "FK_ForumPosts_AspNetUsers_NameId",
+                        column: x => x.NameId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -219,21 +216,14 @@ namespace Shawna_Staff.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_ForumPosts_AspNetUsers_NameId",
+            migrationBuilder.CreateIndex(
+                name: "IX_ForumPosts_NameId",
                 table: "ForumPosts",
-                column: "NameId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "NameId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ForumPosts_AspNetUsers_NameId",
-                table: "ForumPosts");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -250,50 +240,13 @@ namespace Shawna_Staff.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ForumPosts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropIndex(
-                name: "IX_ForumPosts_NameId",
-                table: "ForumPosts");
-
-            migrationBuilder.DropColumn(
-                name: "NameId",
-                table: "ForumPosts");
-
-            migrationBuilder.AddColumn<int>(
-                name: "NameUserID",
-                table: "ForumPosts",
-                type: "int",
-                nullable: true);
-
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    UserID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.UserID);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ForumPosts_NameUserID",
-                table: "ForumPosts",
-                column: "NameUserID");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ForumPosts_User_NameUserID",
-                table: "ForumPosts",
-                column: "NameUserID",
-                principalTable: "User",
-                principalColumn: "UserID",
-                onDelete: ReferentialAction.Restrict);
         }
     }
 }

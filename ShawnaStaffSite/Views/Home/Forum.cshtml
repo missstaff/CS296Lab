@@ -4,7 +4,7 @@
 }
 
 <div class="jumbotron">
-    <h1 class="display-4 text-center">Community Forum</h1><br />
+    <h1 class="display-4 text-center head-link"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="ForumPost">Community Forum</a></h1><br />
 </div>
 
 <div class="container">
@@ -18,10 +18,12 @@
             <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostText">Comments</label><br />
             <input class="form-control col-sm-6 pb-3" asp-for="PostText" placeholder="Write comments..." /><br />
         </div>
+        @*
         <div class="row">
             <label class="control-label col-sm-3 ml-5 pb-3" asp-for="Name.Name">User Name</label><br />
             <input class="form-control col-sm-6 pb-3" asp-for="Name.Name" placeholder="Username" /><br />
         </div>
+        *@
         <div class="row">
             <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostRating">Rating</label><br />
             <input class="form-control col-sm-6 pb-3" asp-for="PostRating" placeholder="Rate this post" /><br />

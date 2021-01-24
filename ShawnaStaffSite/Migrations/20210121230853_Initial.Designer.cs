@@ -10,8 +10,8 @@ using Shawna_Staff.Models;
 namespace Shawna_Staff.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20210112204156_InitialWithAuthorization")]
-    partial class InitialWithAuthorization
+    [Migration("20210121230853_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -234,7 +234,6 @@ namespace Shawna_Staff.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NameId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PostRating")
@@ -324,9 +323,7 @@ namespace Shawna_Staff.Migrations
                 {
                     b.HasOne("Shawna_Staff.Models.AppUser", "Name")
                         .WithMany()
-                        .HasForeignKey("NameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NameId");
                 });
 #pragma warning restore 612, 618
         }
