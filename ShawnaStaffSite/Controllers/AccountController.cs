@@ -83,7 +83,7 @@ namespace Shawna_Staff.Controllers
                     }
                 }
             }
-            ModelState.AddModelError("", "Invalid usernqame/password");
+            ModelState.AddModelError("", "Invalid username/password");
             return View(model);
         }
     }
