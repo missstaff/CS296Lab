@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shawna_Staff.Models;
@@ -30,6 +31,7 @@ namespace Shawna_Staff.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Forum()
         {
             return View();
