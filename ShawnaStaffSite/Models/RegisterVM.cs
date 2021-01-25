@@ -14,12 +14,13 @@ namespace Shawna_Staff.Models
 
         [Required(ErrorMessage = "Please enter a password.")]
         [DataType(DataType.Password)]
-        [Compare("ConfirmPassword")]
+        
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Please confirm your password.")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password")]
+        [Compare("Password")]
         public string ConfirmPassword { get; set; }
     }
 }

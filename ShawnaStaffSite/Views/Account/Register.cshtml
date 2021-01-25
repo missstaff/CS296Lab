@@ -23,17 +23,18 @@
         <div class="col-sm-4">
             <input asp-for="Password" class="form-control" />
         </div>
-        <div class="col">
-            <span asp-validation-for="Password"
-                  class="text-danger"></span>
-        </div>
+        
     </div>
 
     <div class="form-goup" row>
         <div class="col-sm-2"><label>Confirm Password:</label></div>
         <div class="col-sm-4">
-            <input asp-for="ConfirmPassword" 
+            <input asp-for="ConfirmPassword"
                    class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="ConfirmPassword"
+                  class="text-danger"></span>
         </div>
     </div>
 
