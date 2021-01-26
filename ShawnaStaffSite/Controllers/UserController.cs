@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Shawna_Staff.Controllers
 {
-    [Authorize(Roles =  "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+    //[Area("Admin")]
     public class UserController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -34,7 +34,7 @@ namespace Shawna_Staff.Controllers
             UserVM model = new UserVM
             {
                 Users = users,
-                Roles = (IEnumerable<AppUser>)roleManager.Roles
+                Roles = (IEnumerable<IdentityRole>)roleManager.Roles
             };
             return View(model);
         }
@@ -97,5 +97,6 @@ namespace Shawna_Staff.Controllers
             await roleManager.CreateAsync(new IdentityRole("Admin"));
             return RedirectToAction("Index");
         }
+
     }
 }

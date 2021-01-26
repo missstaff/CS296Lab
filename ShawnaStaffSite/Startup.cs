@@ -66,6 +66,9 @@ namespace Shawna_Staff
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DBInitializer.CreateAdminUser(app.ApplicationServices).Wait();
+            DBInitializer.CreateMemberUser(app.ApplicationServices).Wait();
         }
     }
 }

@@ -19,11 +19,11 @@ namespace Shawna_Staff.Models
                 return;   // DB has been seeded
             }
 
-           // var result = roleManager.CreateAsync(new IdentityRole("Admin")).Result;
+            // var result = roleManager.CreateAsync(new IdentityRole("Admin")).Result;
 
             var users = new AppUser[]
            {
-            new AppUser{Name="Shawna"},
+            new AppUser{Name="Shawna",},
             new AppUser{Name="Ivy"},
             new AppUser{Name="Mikhail"}
            };
@@ -46,7 +46,7 @@ namespace Shawna_Staff.Models
             context.SaveChanges();
         }
 
-       public static async Task CreateAdminUser(IServiceProvider serviceProvider)
+        public static async Task CreateAdminUser(IServiceProvider serviceProvider)
         {
             UserManager<AppUser> userManager =
                 serviceProvider.GetRequiredService<UserManager<AppUser>>();
@@ -58,7 +58,7 @@ namespace Shawna_Staff.Models
             string roleName = "Admin";
 
             //if role doesn't exist create it
-            if(await roleManager.FindByNameAsync(roleName) == null)
+            if (await roleManager.FindByNameAsync(roleName) == null)
             {
                 await roleManager.CreateAsync(new IdentityRole(roleName));
             }
@@ -68,7 +68,7 @@ namespace Shawna_Staff.Models
             {
                 AppUser user = new AppUser { UserName = username };
                 var result = await userManager.CreateAsync(user, password);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, roleName);
                 }
