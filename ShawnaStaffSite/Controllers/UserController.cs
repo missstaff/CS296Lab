@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shawna_Staff.Models;
+using Shawna_Staff.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,15 @@ namespace Shawna_Staff.Controllers
     {
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
+        private IForums  repo;
 
         public UserController(UserManager<AppUser> usrmangr,
-                RoleManager<IdentityRole> rolemangr)
+                RoleManager<IdentityRole> rolemangr,
+                IForums r)
         {
             userManager = usrmangr;
             roleManager = rolemangr;
+            repo = r;
         }
 
         public async Task<IActionResult> Index()
@@ -41,11 +45,22 @@ namespace Shawna_Staff.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            IdentityResult result = null;
             AppUser user = await userManager.FindByIdAsync(id);
             if(user != null)
             {
-                IdentityResult result = await userManager.DeleteAsync(user);
-                if(!result.Succeeded)
+                if (0 == (from r in repo.Posts
+                          where r.Name.Name == user.Name
+                          select r).Count<ForumPosts>())
+                {
+                    result = await userManager.DeleteAsync(user);
+                }
+                else
+                {
+                    result = IdentityResult.Failed(new IdentityError()
+                    { Description = "User's reviews must be deleted first" });
+                }
+                if (!result.Succeeded)
                 {
                     string errorMessage = "";
                     foreach(IdentityError error in result.Errors)
