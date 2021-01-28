@@ -112,8 +112,8 @@ namespace Shawna_Staff.Models
             RoleManager<IdentityRole> roleManager =
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            string username = "";
-            string password = "";
+           // string username = "";
+           // string password = "";
             string roleName = "Member";
 
             //if role doesn't exist create it
@@ -123,10 +123,10 @@ namespace Shawna_Staff.Models
             }
 
             //if username doesn't exist, create it and add it to role
-            if (await userManager.FindByNameAsync(username) == null)
+            if (await userManager.FindByNameAsync("") == null)
             {
-                AppUser user = new AppUser { UserName = username };
-                var result = await userManager.CreateAsync(user, password);
+                AppUser user = new AppUser { UserName = "" };
+                var result = await userManager.CreateAsync(user, "");
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, roleName);

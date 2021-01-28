@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace Shawna_Staff.Controllers
 {
     [Authorize(Roles = "Admin")]
-    //[Area("Admin")]
     public class UserController : Controller
     {
         private UserManager<AppUser> userManager;
@@ -71,6 +70,35 @@ namespace Shawna_Staff.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(RegisterVM model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var user = new AppUser { UserName = model.Username };
+                var result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(model);
         }
 
         [HttpPost]
