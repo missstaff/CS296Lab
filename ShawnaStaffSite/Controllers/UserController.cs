@@ -68,6 +68,10 @@ namespace Shawna_Staff.Controllers
                     }
                     TempData["message"] = errorMessage;
                 }
+                else
+                {
+                    TempData["message"] = "";
+                }
             }
             return RedirectToAction("Index");
         }
