@@ -30,6 +30,7 @@ namespace Shawna_Staff.Controllers
         {
             return View();
         }
+
         [Authorize]
         public IActionResult Forum()
         {
@@ -39,13 +40,11 @@ namespace Shawna_Staff.Controllers
         [HttpPost]
         public IActionResult Forum(ForumPosts model)
         {
-
             if (ModelState.IsValid)
-            {
+            { 
                 model.Name = userManager.GetUserAsync(User).Result;
                 model.Name.Name = model.Name.UserName;
                 model.Date = DateTime.Now;
-              
                 // Store the model in the database
                 repo.AddPost(model);
             }

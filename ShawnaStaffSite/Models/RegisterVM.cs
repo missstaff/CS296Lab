@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +14,6 @@ namespace Shawna_Staff.Models
 
         [Required(ErrorMessage = "Please enter a password.")]
         [DataType(DataType.Password)]
-        
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Please confirm your password.")]
