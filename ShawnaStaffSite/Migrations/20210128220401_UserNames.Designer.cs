@@ -10,8 +10,8 @@ using Shawna_Staff.Models;
 namespace Shawna_Staff.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20210121230853_Initial")]
-    partial class Initial
+    [Migration("20210128220401_UserNames")]
+    partial class UserNames
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

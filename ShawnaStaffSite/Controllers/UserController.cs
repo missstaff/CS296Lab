@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shawna_Staff.Models;
+using Shawna_Staff.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,18 +10,20 @@ using System.Threading.Tasks;
 
 namespace Shawna_Staff.Controllers
 {
-    [Authorize(Roles =  "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private UserManager<AppUser> userManager;
         private RoleManager<IdentityRole> roleManager;
+        private IForums  repo;
 
         public UserController(UserManager<AppUser> usrmangr,
-                RoleManager<IdentityRole> rolemangr)
+                RoleManager<IdentityRole> rolemangr,
+                IForums r)
         {
             userManager = usrmangr;
             roleManager = rolemangr;
+            repo = r;
         }
 
         public async Task<IActionResult> Index()
@@ -34,18 +37,29 @@ namespace Shawna_Staff.Controllers
             UserVM model = new UserVM
             {
                 Users = users,
-                Roles = (IEnumerable<AppUser>)roleManager.Roles
+                Roles = (IEnumerable<IdentityRole>)roleManager.Roles
             };
             return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            IdentityResult result = null;
             AppUser user = await userManager.FindByIdAsync(id);
             if(user != null)
             {
-                IdentityResult result = await userManager.DeleteAsync(user);
-                if(!result.Succeeded)
+                if (0 == (from r in repo.Posts
+                          where r.Name.Name == user.Name
+                          select r).Count<ForumPosts>())
+                {
+                    result = await userManager.DeleteAsync(user);
+                }
+                else
+                {
+                    result = IdentityResult.Failed(new IdentityError()
+                    { Description = "User's reviews must be deleted first" });
+                }
+                if (!result.Succeeded)
                 {
                     string errorMessage = "";
                     foreach(IdentityError error in result.Errors)
@@ -54,8 +68,41 @@ namespace Shawna_Staff.Controllers
                     }
                     TempData["message"] = errorMessage;
                 }
+                else
+                {
+                    TempData["message"] = "";
+                }
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(RegisterVM model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var user = new AppUser { UserName = model.Username };
+                var result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -97,5 +144,6 @@ namespace Shawna_Staff.Controllers
             await roleManager.CreateAsync(new IdentityRole("Admin"));
             return RedirectToAction("Index");
         }
+
     }
 }

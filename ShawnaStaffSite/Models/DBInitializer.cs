@@ -1,5 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,29 +19,119 @@ namespace Shawna_Staff.Models
                 return;   // DB has been seeded
             }
 
-            var users = new AppUser[]
-           {
-            new AppUser{Name="Shawna"},
-            new AppUser{Name="Ivy"},
-            new AppUser{Name="Mikhail"}
-           };
-            foreach (AppUser u in users)
+            // var result = roleManager.CreateAsync(new IdentityRole("Admin")).Result;
+            
+            AppUser shawnaStaff = new AppUser
             {
-                context.Users.Add(u);
-            }
+                UserName = "SStaff",
+                Name = "Shawna Staff"
+            };
+            context.Users.Add(shawnaStaff);
+            context.SaveChanges();
+
+            AppUser ivyStaff = new AppUser
+            {
+                UserName = "IStaff",
+                Name = "Ivy Staff"
+            };
+            context.Users.Add(ivyStaff);
+            context.SaveChanges();
+
+            AppUser mikhailGuidesse = new AppUser
+            {
+                UserName = "MGuidesse",
+                Name = "Mikhail Guidesse"
+            };
+            context.Users.Add(mikhailGuidesse);
             context.SaveChanges();
 
             var forums = new ForumPosts[]
             {
-            new ForumPosts{PostTopic="Lighting",PostText="The idea about using a lace curtain to defuse natural lighting is genius!",Name = new AppUser {Name = "Shawna" },Date=DateTime.Parse("2020-11-10"), PostRating = 5},
-            new ForumPosts{PostTopic="Reframing",PostText="I didn't understand reframing.",Name = new AppUser {Name = "Ivy" },Date=DateTime.Parse("2020-7-16"), PostRating = 1},
-            new ForumPosts{PostTopic="Golden Hour",PostText="This definitely gives me a reason to be up early.",Name = new AppUser {Name = "Mikhail" },Date=DateTime.Parse("2021-1-3"), PostRating = 4}
+            new ForumPosts
+            {PostTopic = "Lighting",
+             PostText = "The idea about using a lace curtain to defuse natural lighting is genius!",
+             Name = shawnaStaff,
+             Date = DateTime.Parse("2020-11-10"), 
+             PostRating = 5},
+
+            new ForumPosts
+            {PostTopic = "Reframing",
+            PostText = "I didn't understand reframing.",
+            Name = ivyStaff,
+            Date = DateTime.Parse("2020-7-16"),
+            PostRating = 1},
+
+            new ForumPosts
+            {PostTopic = "Golden Hour",
+             PostText = "This definitely gives me a reason to be up early.",
+             Name = mikhailGuidesse,
+             Date = DateTime.Parse("2021-1-3"), 
+             PostRating = 4}
             };
             foreach (ForumPosts f in forums)
             {
                 context.ForumPosts.Add(f);
             }
             context.SaveChanges();
+        }
+
+        public static async Task CreateAdminUser(IServiceProvider serviceProvider)
+        {
+            UserManager<AppUser> userManager =
+                serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            RoleManager<IdentityRole> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string username = "admin";
+            string password = "Sesame1!";
+            string roleName = "Admin";
+
+            //if role doesn't exist create it
+            if (await roleManager.FindByNameAsync(roleName) == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+
+            //if username doesn't exist, create it and add it to role
+            if (await userManager.FindByNameAsync(username) == null)
+            {
+                AppUser user = new AppUser { UserName = username };
+                var result = await userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, roleName);
+                }
+            }
+        }
+
+
+        public static async Task CreateMemberUser(IServiceProvider serviceProvider)
+        {
+            UserManager<AppUser> userManager =
+                serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            RoleManager<IdentityRole> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string username = "Miss";
+            string password = "Abc123!";
+            string roleName = "Member";
+
+            //if role doesn't exist create it
+            if (await roleManager.FindByNameAsync(roleName) == null)
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleName));
+            }
+
+            //if username doesn't exist, create it and add it to role
+            if (await userManager.FindByNameAsync(username) == null)
+            {
+                AppUser user = new AppUser { UserName = username };
+                var result = await userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, roleName);
+                }
+            }
         }
     }
 }
