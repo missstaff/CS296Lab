@@ -1,0 +1,22 @@
+﻿@model Comment
+@{
+    ViewData["TITLE"] = "Comment";
+}
+
+<div class="jumbotron">
+    <h1 class="display-4 text-center head-link"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="ForumPost">Community Forum</a></h1><br />
+</div>
+<strong>Enter Your Comment</strong>
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="All"></div>
+        <div class="row">
+            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="CommentText">Comments</label><br />
+            <input class="form-control col-sm-6 pb-3" asp-for="CommentText" placeholder="Topic" /><br />
+        </div>
+
+        <div class="row justify-content-center ml-5">
+            <button class="btn btn-primary p-2" type="submit" value="submit">Submit</button>
+        </div>
+    </form>
+</div>

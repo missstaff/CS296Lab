@@ -89,6 +89,24 @@ namespace Shawna_Staff.Controllers
             return View(posts);
         }
 
+        [Authorize]
+        public IActionResult Comment()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Comment(Comment model)
+        {
+            model.Commenter = userManager.GetUserAsync(User).Result;
+            model.Commenter.Name = model.Commenter.UserName;
+            model.Date = DateTime.Now;
+            // Store the model in the database
+            //repo.AddComment(model);
+
+            return View(model);
+        }
+
 
         public IActionResult Privacy()
         {
