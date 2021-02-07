@@ -23,5 +23,10 @@ namespace Shawna_Staff.Repos
             var post = posts.Find(p => p.PostTopic == postTitle);
             return post;
         }
+
+        public void UpdatePost(ForumPosts post)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

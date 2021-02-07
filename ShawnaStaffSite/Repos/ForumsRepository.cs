@@ -19,7 +19,9 @@ namespace Shawna_Staff.Repos
         {
             get
             {
-                return context.ForumPosts.Include(e => e.Name);
+                return context.ForumPosts.Include(e => e.Name)
+                        .Include(e => e.Comments)
+                        .ThenInclude(e => e.Commenter);
             }
         }
 
@@ -33,6 +35,12 @@ namespace Shawna_Staff.Repos
         {
             var posts = context.ForumPosts.Find(postTitle);
             return posts;
+        }
+
+        public void UpdatePost(ForumPosts post)
+        {
+            context.ForumPosts.Update(post);
+            context.SaveChanges();
         }
     }
 }

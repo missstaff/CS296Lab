@@ -90,21 +90,29 @@ namespace Shawna_Staff.Controllers
         }
 
         [Authorize]
-        public IActionResult Comment()
+        public IActionResult Comment(int postId)
         {
-            return View();
+            var commentVM = new CommentVM { PostID = postId };
+            return View(commentVM);
         }
 
         [HttpPost]
-        public IActionResult Comment(Comment model)
+        public RedirectToActionResult Comment(CommentVM commentVM)
         {
-            model.Commenter = userManager.GetUserAsync(User).Result;
-            model.Commenter.Name = model.Commenter.UserName;
-            model.Date = DateTime.Now;
-            // Store the model in the database
-            //repo.AddComment(model);
+            var comment = new Comment { CommentText = commentVM.CommentText };
+            comment.Commenter = userManager.GetUserAsync(User).Result;
 
-            return View(model);
+            comment.Date = DateTime.Now;
+            //retrieve the post the comment belongs to//
+            var post = (from r in repo.Posts
+                        where r.PostID == commentVM.PostID
+                        select r).First<ForumPosts>();
+
+            post.Comments.Add(comment);
+            repo.UpdatePost(post);
+
+
+            return RedirectToAction("ForumPost");
         }
 
 
