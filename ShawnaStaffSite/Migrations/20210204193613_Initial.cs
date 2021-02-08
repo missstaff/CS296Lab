@@ -177,6 +177,34 @@ namespace Shawna_Staff.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CommenterId = table.Column<string>(nullable: true),
+                    CommentText = table.Column<string>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    ForumPostsPostID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Comment_AspNetUsers_CommenterId",
+                        column: x => x.CommenterId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_ForumPosts_ForumPostsPostID",
+                        column: x => x.ForumPostsPostID,
+                        principalTable: "ForumPosts",
+                        principalColumn: "PostID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -217,6 +245,16 @@ namespace Shawna_Staff.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comment_CommenterId",
+                table: "Comment",
+                column: "CommenterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_ForumPostsPostID",
+                table: "Comment",
+                column: "ForumPostsPostID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ForumPosts_NameId",
                 table: "ForumPosts",
                 column: "NameId");
@@ -240,10 +278,13 @@ namespace Shawna_Staff.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ForumPosts");
+                name: "Comment");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "ForumPosts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

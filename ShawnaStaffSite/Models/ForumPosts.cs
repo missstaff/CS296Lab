@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shawna_Staff.Models
 {
     public class ForumPosts
     {
+        public List<Comment> comments = new List<Comment>();
+
         [Key]
         public int PostID { get; set; }
 
@@ -28,5 +31,13 @@ namespace Shawna_Staff.Models
 
         [Required]
         public DateTime Date { get; set; }
+
+        public List<Comment> Comments
+        {
+            get
+            {
+                return comments;
+            }
+        }
     }
 }

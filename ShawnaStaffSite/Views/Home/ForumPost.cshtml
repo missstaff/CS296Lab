@@ -10,13 +10,15 @@
 
 <form method="post" class="container">
     <div class="row p-2">
-        <label for="PostTopic" class="control-label col-md-1">Post Topic</label>
-        <input name="PostTopic" class="form-control col-md-6" />
+        <strong><label for="PostTopic" class="control-label col-md-1">Topic</label></strong>
+        <input name="PostTopic" class="form-control col-md-6 ml-1" />
     </div>
+
     <div class="row p-2">
-        <label for="Date" class="control-label col-md-1">Date</label>
-        <input name="Date" class="form-control col-md-6" />
+        <strong><label for="Date" class="control-label col-md-1">Date</label></strong>
+        <input name="Date" class="form-control col-md-6 ml-3" />
     </div>
+
     <div class="row p-2 ml-5">
         <button type="submit" class="form-control btm btn-success col-1 mb-3 ml-5">Submit</button>
         <a asp-action="ForumPost" class="btn btn-secondary col-1 mb-3 ml-2">Reset</a>
@@ -25,19 +27,37 @@
 
 <div>
     <h2>Discussion Forum</h2>
-   @foreach (ForumPosts post in Model)
-   {
-    <p>
-        Post Topic:
-        @post.PostTopic;
-        Post:
-        @post.PostText;
-        User Name:
-        @post.Name;
-        Post Rating:
-        @post.PostRating;
-        Date:
-        @post.Date;
-    </p>
-   }
-</div>
+    @foreach (ForumPosts post in Model)
+    {
+        <p>
+            <strong>Post Topic</strong><br />
+            @post.PostTopic<br />
+            <strong>Post</strong><br />
+            @post.PostText<br />
+            <strong>User Name</strong><br />
+            @post.Name<br />
+            <strong>Post Rating</strong><br />
+            @post.PostRating<br />
+            <strong> Date</strong><br />
+            @post.Date<br />
+        </p>
+
+        @if (post.Comments.Count != 0)
+        {
+            <h3>Comments</h3>
+
+            @foreach (Comment comment in post.Comments)
+            {
+                <p>
+                    <strong class="m-3">Comment:</strong>
+                    @comment.CommentText<br />
+                    <strong class="m-3">By:</strong>
+                    @comment.Commenter.Name<br />
+                    <strong class="m-3">Date:</strong>
+                    @comment.Date<br />
+                </p>
+            }
+        }
+        <a asp-action="Comment" asp-route-postId="@post.PostID" class="btn btn-secondary col-3">Add Comment</a>
+
+    }

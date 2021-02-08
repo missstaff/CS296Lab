@@ -45,33 +45,37 @@ namespace Shawna_Staff.Models
             context.Users.Add(mikhailGuidesse);
             context.SaveChanges();
 
-            var forums = new ForumPosts[]
+            ForumPosts Lighting = new ForumPosts
             {
-            new ForumPosts
-            {PostTopic = "Lighting",
-             PostText = "The idea about using a lace curtain to defuse natural lighting is genius!",
-             Name = shawnaStaff,
-             Date = DateTime.Parse("2020-11-10"), 
-             PostRating = 5},
+                PostTopic = "Lighting",
+                PostText = "The idea about using a lace curtain to defuse natural lighting is genius!",
+                Name = shawnaStaff,
+                Date = DateTime.Parse("2020-11-10"),
+                PostRating = 5,
+             };
+            context.ForumPosts.Add(Lighting);
+            context.SaveChanges();
 
-            new ForumPosts
-            {PostTopic = "Reframing",
-            PostText = "I didn't understand reframing.",
-            Name = ivyStaff,
-            Date = DateTime.Parse("2020-7-16"),
-            PostRating = 1},
-
-            new ForumPosts
-            {PostTopic = "Golden Hour",
-             PostText = "This definitely gives me a reason to be up early.",
-             Name = mikhailGuidesse,
-             Date = DateTime.Parse("2021-1-3"), 
-             PostRating = 4}
+            ForumPosts Reframing = new ForumPosts
+            {
+                PostTopic = "Reframing",
+                PostText = "I didn't understand reframing.",
+                Name = ivyStaff,
+                Date = DateTime.Parse("2020-7-16"),
+                PostRating = 1
             };
-            foreach (ForumPosts f in forums)
+            context.ForumPosts.Add(Reframing);
+            context.SaveChanges();
+
+            ForumPosts GoldenHour = new ForumPosts
             {
-                context.ForumPosts.Add(f);
-            }
+                PostTopic = "Golden Hour",
+                PostText = "This definitely gives me a reason to be up early.",
+                Name = mikhailGuidesse,
+                Date = DateTime.Parse("2021-1-3"),
+                PostRating = 4
+            };
+            context.ForumPosts.Add(GoldenHour);
             context.SaveChanges();
         }
 

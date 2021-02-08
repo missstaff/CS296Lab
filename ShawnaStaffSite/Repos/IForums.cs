@@ -12,5 +12,7 @@ namespace Shawna_Staff.Repos
         public void AddPost(ForumPosts forumPost);
 
         public ForumPosts GetForumPostsByPostTitle(string postTitle);
+
+        public void UpdatePost(ForumPosts post);
     }
 }

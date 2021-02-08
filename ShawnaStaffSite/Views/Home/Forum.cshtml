@@ -1,4 +1,4 @@
-﻿@model ForumPosts 
+﻿@model ForumPosts
 @{
     ViewData["TITLE"] = "Forum Page";
 }
@@ -6,30 +6,28 @@
 <div class="jumbotron">
     <h1 class="display-4 text-center head-link"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="ForumPost">Community Forum</a></h1><br />
 </div>
-
+<strong class="ml-5">Enter Your Post</strong>
 <div class="container">
     <form method="post">
         <div asp-validation-summary="All"></div>
+
         <div class="row">
-            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostTopic">Post Topic </label><br />
-            <input class="form-control col-sm-6 pb-3" asp-for="PostTopic" placeholder="Topic" /><br />
+            <strong><label class="control-label col-sm-3 ml-5 mr-1 pb-3" asp-for="PostTopic">Topic </label></strong><br />
+            <input class="form-control col-sm-6 pb-3 ml-5" asp-for="PostTopic" placeholder="Topic" /><br />
         </div>
+
         <div class="row">
-            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostText">Comments</label><br />
+            <strong><label class="control-label col-sm-3 ml-5 mr-2 pb-3" asp-for="PostText">Comments</label></strong><br />
             <input class="form-control col-sm-6 pb-3" asp-for="PostText" placeholder="Write comments..." /><br />
         </div>
-        @*
+
         <div class="row">
-            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="Name.Name">User Name</label><br />
-            <input class="form-control col-sm-6 pb-3" asp-for="Name.Name" placeholder="Username" /><br />
+            <strong><label class="control-label col-sm-3 ml-5 mr-2 pb-3" asp-for="PostRating">Rating</label></strong><br />
+            <input class="form-control col-sm-6 pb-3 ml-4" asp-for="PostRating" placeholder="Rate this post" /><br />
         </div>
-        *@
-        <div class="row">
-            <label class="control-label col-sm-3 ml-5 pb-3" asp-for="PostRating">Rating</label><br />
-            <input class="form-control col-sm-6 pb-3" asp-for="PostRating" placeholder="Rate this post" /><br />
-        </div>
-        <div class="row justify-content-center ml-5">
-            <button class="btn btn-primary p-2" type="submit" value="submit">Submit</button>
+
+        <div class="row justify-content-center">
+            <button class="btn btn-primary p-2 mr-5" type="submit" value="submit">Submit</button>
         </div>
     </form>
-        </div>
+</div>

@@ -10,8 +10,8 @@ using Shawna_Staff.Models;
 namespace Shawna_Staff.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20210204163106_Initial")]
-    partial class Initial
+    [Migration("20210204195056_Seed2")]
+    partial class Seed2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -223,6 +223,35 @@ namespace Shawna_Staff.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Shawna_Staff.Models.Comment", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CommentText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CommenterId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ForumPostsPostID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CommenterId");
+
+                    b.HasIndex("ForumPostsPostID");
+
+                    b.ToTable("Comment");
+                });
+
             modelBuilder.Entity("Shawna_Staff.Models.ForumPosts", b =>
                 {
                     b.Property<int>("PostID")
@@ -317,6 +346,17 @@ namespace Shawna_Staff.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Shawna_Staff.Models.Comment", b =>
+                {
+                    b.HasOne("Shawna_Staff.Models.AppUser", "Commenter")
+                        .WithMany()
+                        .HasForeignKey("CommenterId");
+
+                    b.HasOne("Shawna_Staff.Models.ForumPosts", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ForumPostsPostID");
                 });
 
             modelBuilder.Entity("Shawna_Staff.Models.ForumPosts", b =>

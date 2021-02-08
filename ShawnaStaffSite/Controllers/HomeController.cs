@@ -89,6 +89,32 @@ namespace Shawna_Staff.Controllers
             return View(posts);
         }
 
+        [Authorize]
+        public IActionResult Comment(int postId)
+        {
+            var commentVM = new CommentVM { PostID = postId };
+            return View(commentVM);
+        }
+
+        [HttpPost]
+        public RedirectToActionResult Comment(CommentVM commentVM)
+        {
+            var comment = new Comment { CommentText = commentVM.CommentText };
+            comment.Commenter = userManager.GetUserAsync(User).Result;
+
+            comment.Date = DateTime.Now;
+            //retrieve the post the comment belongs to//
+            var post = (from r in repo.Posts
+                        where r.PostID == commentVM.PostID
+                        select r).First<ForumPosts>();
+
+            post.Comments.Add(comment);
+            repo.UpdatePost(post);
+
+
+            return RedirectToAction("ForumPost");
+        }
+
 
         public IActionResult Privacy()
         {
