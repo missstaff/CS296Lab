@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using Shawna_Staff.Models;
 using Shawna_Staff.Repos;
 
@@ -29,6 +26,7 @@ namespace Shawna_Staff
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+       
             services.AddControllersWithViews();
             services.AddTransient<IForums, ForumsRepository>();
             services.AddDbContext<ForumContext>(options => 
@@ -37,6 +35,12 @@ namespace Shawna_Staff
             services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<ForumContext>()
             .AddDefaultTokenProviders();
+
+            services.AddResponseCaching((options) =>
+            {              
+                options.MaximumBodySize = 1024;
+                options.UseCaseSensitivePaths = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,12 +63,40 @@ namespace Shawna_Staff
 
             app.UseAuthentication();
             app.UseAuthorization();
+           
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                await next();
+            });
+
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Method.Equals(System.Net.Http.HttpMethod.Get))
+                {
+                    context.Response.GetTypedHeaders().CacheControl =
+                    new CacheControlHeaderValue()
+                    {
+                        Private = true,
+                        MaxAge = TimeSpan.FromSeconds(10),
+                        NoCache = true,
+                        NoStore = true,
+                        MustRevalidate = true
+                        
+                    };
+                    context.Response.Headers[HeaderNames.Vary] =
+                        new string[] { "Accept-Encoding" };
+                }
+                await next();
             });
 
             DBInitializer.CreateAdminUser(app.ApplicationServices).Wait();

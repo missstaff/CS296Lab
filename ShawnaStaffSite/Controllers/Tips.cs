@@ -7,6 +7,7 @@ using Shawna_Staff.Models;
 
 namespace Shawna_Staff.Controllers
 {
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class TipsController : Controller
     {
         public IActionResult Index()

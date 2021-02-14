@@ -10,6 +10,7 @@ using Shawna_Staff.Repos;
 
 namespace Shawna_Staff.Controllers
 {
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class HomeController : Controller
     {
         IForums repo;

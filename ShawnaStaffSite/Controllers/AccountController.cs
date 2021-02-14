@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shawna_Staff.Controllers
 {
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class AccountController : Controller
     {
         private UserManager<AppUser> userManager;
