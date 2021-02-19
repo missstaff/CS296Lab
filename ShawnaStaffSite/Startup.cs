@@ -57,7 +57,16 @@ namespace Shawna_Staff
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = (context) =>
+                {
+                    // Disable caching for all static files.
+                    context.Context.Response.Headers["Cache-Control"] = "no-cache, no-store";
+                    context.Context.Response.Headers["Pragma"] = "no-cache";
+                    context.Context.Response.Headers["Expires"] = "-1";
+                }
+            });
 
             app.UseRouting();
 
@@ -78,7 +87,7 @@ namespace Shawna_Staff
                 await next();
             });
 
-
+            app.UseResponseCaching();
             app.Use(async (context, next) =>
             {
                 if (context.Request.Method.Equals(System.Net.Http.HttpMethod.Get))
@@ -98,6 +107,8 @@ namespace Shawna_Staff
                 }
                 await next();
             });
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.Headers.Pragma.ParseAdd("no-cache");
 
             DBInitializer.CreateAdminUser(app.ApplicationServices).Wait();
             DBInitializer.CreateMemberUser(app.ApplicationServices).Wait();

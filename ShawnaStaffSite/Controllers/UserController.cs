@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shawna_Staff.Controllers
 {
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
