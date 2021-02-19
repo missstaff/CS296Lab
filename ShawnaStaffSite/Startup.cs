@@ -84,6 +84,7 @@ namespace Shawna_Staff
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
                 await next();
             });
 
@@ -109,6 +110,12 @@ namespace Shawna_Staff
             });
             HttpResponseMessage response = new HttpResponseMessage();
             response.Headers.Pragma.ParseAdd("no-cache");
+
+            CookieOptions cookie = new CookieOptions
+            {
+                Domain = "https://landscapephotography.azurewebsites.net/",    // replace this with your live site URL
+                Path = "/"                                                      // this allows the cookie access to the root
+            };
 
             DBInitializer.CreateAdminUser(app.ApplicationServices).Wait();
             DBInitializer.CreateMemberUser(app.ApplicationServices).Wait();
