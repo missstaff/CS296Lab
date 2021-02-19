@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Shawna_Staff.Controllers
 {
+    //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class ReferencesController : Controller
     {
         public IActionResult Index()
