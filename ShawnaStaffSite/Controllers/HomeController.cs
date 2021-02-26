@@ -102,6 +102,7 @@ namespace Shawna_Staff.Controllers
         {
             var comment = new Comment { CommentText = commentVM.CommentText };
             comment.Commenter = userManager.GetUserAsync(User).Result;
+            comment.Commenter.Name = comment.Commenter.UserName;
 
             comment.Date = DateTime.Now;
             //retrieve the post the comment belongs to//
