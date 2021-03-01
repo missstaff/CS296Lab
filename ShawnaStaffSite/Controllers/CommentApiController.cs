@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shawna_Staff.Models;
+using Shawna_Staff.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,25 +14,25 @@ namespace Shawna_Staff.Controllers
     [ApiController]
     public class CommentApiController : ControllerBase
     {
-        private readonly ForumContext _context;
+        private readonly IComment repo;
 
-        public CommentApiController(ForumContext context)
+        public CommentApiController(IComment r)
         {
-            _context = context;
+            repo = r;
         }
 
         // GET: api/<CommentApiController>
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
         {
             // converting to a list
-            return await _context.Comments.ToListAsync();
+            return await repo.Comments.ToListAsync();
         }
 
         // GET api/<CommentApiController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await repo.Comments.FirstAsync(e => e.ID == id);
 
             if (comment == null)
             {
@@ -45,61 +46,45 @@ namespace Shawna_Staff.Controllers
         [HttpPost]
         public async Task<ActionResult<Comment>> Comment(Comment comment)
         {
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
+            await repo.AddCommentAsync(comment);
+            await repo.SaveChangesAsync();
 
-            return CreatedAtAction("GetPost", new { id = comment.ID }, comment);
+            return CreatedAtAction("GetComment", new { id = comment.ID }, comment);
         }
 
         // PUT api/<CommentsApiController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutComment(int id, Comment comment)
+        public async Task<ActionResult<Comment>> PutComment(int id, Comment comment)
         {
             if (id != comment.ID)
             {
-                return BadRequest();
+                return NotFound();
             }
+            repo.UpdatCommentAsync(comment, id);
+            await repo.SaveChangesAsync();
 
-            _context.Entry(comment).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CommentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return comment;
         }
 
         // DELETE api/<CommentsApiController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Comment>> DeleteComment(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var comment = await repo.Comments.FirstAsync(e => e.ID == id);
             if (comment == null)
             {
                 return NotFound();
             }
 
-            _context.Comments.Remove(comment);
-            await _context.SaveChangesAsync();
+            await repo.DeleteCommentAsync(id);
+            await repo.SaveChangesAsync();
 
             return comment;
         }
 
         private bool CommentExists(int id)
         {
-            return _context.Comments.Any(e => e.ID == id);
+            return repo.Comments.Any(e => e.ID == id);
         }
     }
 }

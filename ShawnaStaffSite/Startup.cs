@@ -29,6 +29,7 @@ namespace Shawna_Staff
        
             services.AddControllersWithViews();
             services.AddTransient<IForums, ForumsRepository>();
+            services.AddTransient<IComment, CommentRepo>();
             services.AddDbContext<ForumContext>(options => 
             options.UseSqlServer(Configuration["ConnectionStrings:ConnectionString"]));
 

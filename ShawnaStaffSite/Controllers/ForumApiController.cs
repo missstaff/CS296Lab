@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shawna_Staff.Models;
+using Shawna_Staff.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,24 +14,24 @@ namespace Shawna_Staff.Controllers
     [ApiController]
     public class ForumApiController : ControllerBase
     {
-        private readonly ForumContext _context;
+        private readonly IForums repo;
 
-        public ForumApiController(ForumContext context)
+        public ForumApiController(IForums r)
         {
-            _context = context;
+            repo = r;
         }
         // GET: api/<ForumApiController>
         public async Task<ActionResult<IEnumerable<ForumPosts>>> GetPosts()
         {
             // converting to a list
-            return await _context.ForumPosts.ToListAsync();
+            return await repo.Posts.ToListAsync();
         }
 
         // GET api/<ForumApiController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ForumPosts>> GetPost(int id)
         {
-            var post = await _context.ForumPosts.FindAsync(id);
+            var post = await repo.Posts.FirstAsync(e => e.PostID == id);
 
             if (post == null)
             {
@@ -44,61 +45,45 @@ namespace Shawna_Staff.Controllers
         [HttpPost]
         public async Task<ActionResult<ForumPosts>> Post(ForumPosts post)
         {
-            _context.ForumPosts.Add(post);
-            await _context.SaveChangesAsync();
+            await repo.AddPostAsync(post);
+            await repo.SaveChangesAsync();
 
             return CreatedAtAction("GetPost", new { id = post.PostID }, post);
         }
 
         // PUT api/<ForumApiController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPost(int id, ForumPosts post)
+        public async Task<ActionResult<ForumPosts>> PutPost(int id, ForumPosts post)
         {
             if (id != post.PostID)
             {
-                return BadRequest();
+                return NotFound();
             }
+            repo.UpdatePostAsync(post, id);
+            await repo.SaveChangesAsync();
 
-            _context.Entry(post).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PostExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return post;
         }
 
         // DELETE api/<ForumApiController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<ForumPosts>> DeletePost(int id)
         {
-            var post = await _context.ForumPosts.FindAsync(id);
+            var post = await repo.Posts.FirstAsync(e => e.PostID == id);
             if (post == null)
             {
                 return NotFound();
             }
 
-            _context.ForumPosts.Remove(post);
-            await _context.SaveChangesAsync();
+            await repo.DeletePostAsync(id);
+            await repo.SaveChangesAsync();
 
             return post;
         }
 
         private bool PostExists(int id)
         {
-            return _context.ForumPosts.Any(e => e.PostID == id);
+            return repo.Posts.Any(e => e.PostID == id);
         }
     }
 }
