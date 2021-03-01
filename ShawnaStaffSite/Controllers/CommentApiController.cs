@@ -54,7 +54,7 @@ namespace Shawna_Staff.Controllers
 
         // PUT api/<CommentsApiController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Comment>> PutComment(int id, Comment comment)
+        public async Task<ActionResult<Comment>> PutComment(Comment comment, int id)
         {
             if (id != comment.ID)
             {
