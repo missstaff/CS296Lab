@@ -13,7 +13,7 @@ namespace Shawna_Staff.Models
 
         public DbSet<ForumPosts> ForumPosts { get; set; }
 
-        public DbSet<ForumPosts> Comments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
     }
 }

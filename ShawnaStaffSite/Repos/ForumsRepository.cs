@@ -15,6 +15,9 @@ namespace Shawna_Staff.Repos
             context = c;
         }
 
+        /// <summary>
+        /// Forum Controller methods - might try to convert the contoller to async methods
+        /// </summary>
         public IQueryable<ForumPosts> Posts
         {
             get
@@ -41,6 +44,66 @@ namespace Shawna_Staff.Repos
         {
             context.ForumPosts.Update(post);
             context.SaveChanges();
+        }
+
+        /// <summary>
+        /// API Controller repo methods/ should change forum controller to use these
+        /// </summary>
+        public async Task<IQueryable<ForumPosts>> GetPostsAsync()
+        {
+            return await Task.FromResult<IQueryable<ForumPosts>>(context.ForumPosts);
+        }
+
+        public async Task<ForumPosts> GetPostAsync(int? id)
+        {
+            return await Task.FromResult<ForumPosts>(context.ForumPosts.Find(id));
+        }
+
+
+        public async Task<int> AddPostAsync(ForumPosts post)
+        {
+            context.ForumPosts.Add(post);
+            return await context.SaveChangesAsync();
+        }
+
+        public async Task<ForumPosts> DeletePostAsync(int? id)
+        {
+            ForumPosts movie = context.ForumPosts.FirstOrDefault(e => e.PostID == id);
+            if (movie != null)
+            {
+                context.ForumPosts.Remove(movie);
+                await context.SaveChangesAsync();
+            }
+
+            return await Task.FromResult(movie);
+        }
+
+        public bool PostExists(int id)
+        {
+            var post = GetPostAsync(id);
+            if (post != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Task SaveChangesAsync()
+        {
+            return context.SaveChangesAsync();
+        }
+
+        public void UpdatePostAsync(ForumPosts post, int id)
+        {
+            var e = context.ForumPosts.Find(id);
+            e.PostTopic = post.PostTopic;
+            e.PostText = post.PostText;
+            e.Name = post.Name;
+            e.Date = post.Date;
+            e.PostRating = post.PostRating;
         }
     }
 }
